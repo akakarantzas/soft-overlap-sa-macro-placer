@@ -2,11 +2,11 @@
 
 Submission repository for the Partcl x Hudson River Trading Macro Placement Challenge 2026.
 
-This placer is a two-stage simulated annealing method for the Tier-1 IBM macro-placement proxy objective. It starts from the competition-provided `initial.plc`, tries to remove hard-macro overlaps with minimum displacement, and then refines the legal placement with a fast incremental proxy model.
+This placer is a two-stage simulated annealing method for the Tier-1 IBM macro-placement proxy objective. It starts from the competition-provided `initial.plc`, legalizes hard-macro overlaps while preserving the structure of the initial placement as much as possible, and then refines the legal placement with an incremental proxy model.
 
 ![Pipeline overview](assets/pipeline.svg)
 
-## Objective And Constraints
+## Objective
 
 The official Tier-1 proxy objective is:
 
@@ -20,7 +20,7 @@ The final placement must have zero hard-macro overlaps. The implementation uses 
 
 ### 1. Preserve The Initial Placement
 
-The algorithm does not start from a fresh random layout. It begins with the supplied `initial.plc` placement because those coordinates often contain useful global structure. The first phase therefore focuses on legalizing the placement with as little movement as practical.
+The algorithm starts from the supplied `initial.plc` placement rather than a random layout because those coordinates often contain useful global structure. The first phase therefore focuses on legalizing the placement with as little movement as practical.
 
 ### 2. Soft-Overlap Legalization
 
@@ -30,9 +30,9 @@ If the initial placement contains hard-macro overlaps, the placer runs a soft-ov
 soft_cost = incremental_proxy_estimate + lambda * overlap_area
 ```
 
-`lambda` increases over the run. Early moves can trade a small amount of overlap for lower proxy cost; later moves increasingly prioritize eliminating overlap. If any overlap remains after this phase, the placer applies a micro-legalization fallback before refinement.
+`lambda` increases over the run. Early moves can trade a small amount of overlap for lower proxy cost; later moves increasingly prioritize eliminating overlap. If any overlap remains after this phase, the placer applies a final legalization pass before refinement.
 
-### 3. Hard-Reject Incremental SA Refinement
+### 3. Incremental SA Refinement
 
 After legalization, candidate moves that would create a hard-macro overlap are rejected immediately. Legal moves are scored with an incremental proxy estimator that updates only local state affected by the moved macro:
 
@@ -40,7 +40,7 @@ After legalization, candidate moves that would create a hard-macro overlap are r
 - Density bins touched by the macro footprint
 - RUDY-style congestion bins touched by affected net bounding boxes
 
-This inner-loop estimator is not a replacement for the official evaluator. It is used for high-throughput search; the official challenge evaluator remains the source of truth for submitted scores.
+The incremental proxy estimator is used only to accelerate local search inside the annealing loop. Final scores are always computed with the official challenge evaluator.
 
 ## Results
 
@@ -48,13 +48,13 @@ Development aggregate recorded for this implementation:
 
 | Method | Avg Proxy Cost | Overlaps | Runtime |
 | --- | ---: | ---: | --- |
-| Soft-Overlap SA placer | 1.4734 | 0 | About 56 minutes total across 17 IBM benchmarks |
+| Soft-Overlap SA placer | 1.4734 | 0 | ~56 minutes total runtime across the 17 IBM benchmarks on the local development environment |
 | RePlAce baseline | 1.4578 | 0 | Organizer baseline |
 | SA baseline | 2.1251 | 0 | Organizer baseline |
 
 ![Score comparison](assets/score_comparison.svg)
 
-The `1.4734` figure is a local development result, not an organizer-verified leaderboard score. The executable implementation is the source of truth; judges should re-run the official evaluator in their environment.
+The `1.4734` figure is a local development result and has not been organizer-verified.
 
 ## Repository Layout
 
@@ -151,16 +151,12 @@ The implementation uses the official challenge package plus:
 - SciPy
 - Matplotlib, Pillow, and tqdm for optional artifact generation
 
-The judges' standard challenge environment should satisfy the runtime dependencies. `requirements.txt` is included for explicit dependency review.
-
-## Notes For Judges
-
-- The implementation uses public benchmark data and the official `macro_place` evaluator API.
-- It does not modify evaluator functions.
-- It does not use proprietary placement tools.
-- It does not require network access at evaluation time.
-- The algorithm is stochastic but seeded with `seed=42` by default.
+`requirements.txt` is included for explicit dependency review.
 
 ## License
 
-MIT. Winning challenge submissions may need to be opened under the competition's required open-source terms.
+Apache 2.0
+
+## Authors
+- Dimitris Kalligaridis
+- Apostolos Kakarantzas
