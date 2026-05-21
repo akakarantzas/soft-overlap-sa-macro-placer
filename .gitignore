@@ -7,5 +7,10 @@ uv.lock
 results/
 *.pt
 *.png
+*.gif
 !assets/*.svg
 !assets/*.png
+!artifacts/*.png
+!artifacts/*.svg
+!artifacts/*.gif
+!artifacts/*.json

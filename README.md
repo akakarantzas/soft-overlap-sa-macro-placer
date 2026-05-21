@@ -62,6 +62,7 @@ The `1.4734` score is the local validated aggregate recorded in the development 
 placer.py
 submissions/retryoos/top1_incremental_sa.py
 submissions/retryoos/top1_soft_overlap_sa.py
+scripts/generate_artifacts.py
 submissions/retryoos/top1_replace_sa.py
 scripts/setup_in_challenge_repo.sh
 scripts/setup_in_challenge_repo.bat
@@ -110,6 +111,33 @@ mkdir -p results
 uv run evaluate submissions/v57_soft_overlap_sa.py --all --json-out results/v57_eval.json 2>&1 | tee results/v57_eval.log
 ```
 
+## Reproducible Artifacts
+
+The repository includes a small artifact generator. The default mode creates fast, data-backed comparison charts from the published challenge baselines and the recorded V57 aggregate:
+
+```bash
+python scripts/generate_artifacts.py
+```
+
+When pointed at a full challenge checkout, it can also render actual benchmark geometry:
+
+```bash
+python scripts/generate_artifacts.py \
+  --challenge-repo /path/to/macro-place-challenge-2026 \
+  --benchmark ibm01
+```
+
+To run V57 on that benchmark and emit final-placement PNGs plus an animated GIF from `initial.plc` to the V57 output:
+
+```bash
+python scripts/generate_artifacts.py \
+  --challenge-repo /path/to/macro-place-challenge-2026 \
+  --benchmark ibm01 \
+  --run-placer
+```
+
+The animation is deliberately generated from a real placement run. If `--run-placer` is not used, the script only produces static comparison artifacts and the real initial placement.
+
 ## Dependencies
 
 The implementation uses the official challenge package plus:
@@ -119,7 +147,7 @@ The implementation uses the official challenge package plus:
 - PyTorch
 - Numba
 - SciPy
-- Matplotlib and tqdm through the challenge environment
+- Matplotlib, Pillow, and tqdm through the challenge environment
 
 The judges' standard challenge environment should satisfy these dependencies. `requirements.txt` is included for explicit dependency review.
 
