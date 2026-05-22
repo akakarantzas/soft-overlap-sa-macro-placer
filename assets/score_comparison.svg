@@ -1,32 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
-  <title id="title">Average proxy cost comparison</title>
-  <desc id="desc">Average proxy cost bars: Soft-Overlap SA 1.4713, RePlAce 1.4578, SA 2.1251. Lower is better.</desc>
-  <defs>
-    <style>
-      .bg{fill:#f8fafc}.axis{stroke:#334155;stroke-width:2}.grid{stroke:#cbd5e1;stroke-width:1}.label{font:15px Arial,sans-serif;fill:#334155}.title{font:700 24px Arial,sans-serif;fill:#0f172a}.value{font:700 16px Arial,sans-serif;fill:#0f172a}.note{font:14px Arial,sans-serif;fill:#475569}
-    </style>
-  </defs>
-  <rect width="900" height="360" class="bg"/>
-  <text x="40" y="45" class="title">Average Proxy Cost on 17 IBM ICCAD04 Benchmarks</text>
-  <text x="40" y="72" class="note">Lower is better. Soft-Overlap SA score is from a local evaluate --all run.</text>
-  <line x1="170" y1="285" x2="820" y2="285" class="axis"/>
-  <line x1="170" y1="95" x2="170" y2="285" class="axis"/>
-  <line x1="170" y1="245" x2="820" y2="245" class="grid"/>
-  <line x1="170" y1="205" x2="820" y2="205" class="grid"/>
-  <line x1="170" y1="165" x2="820" y2="165" class="grid"/>
-  <line x1="170" y1="125" x2="820" y2="125" class="grid"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="460" viewBox="0 0 1100 460" role="img" aria-labelledby="scoreTitle scoreDesc" font-family="Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif">
+  <title id="scoreTitle">Average proxy cost comparison</title>
+  <desc id="scoreDesc">Average proxy cost on 17 IBM ICCAD04 benchmarks. Soft-Overlap SA 1.4713; RePlAce 1.4578; SA baseline 2.1251.</desc>
 
-  <text x="48" y="129" class="label">SA baseline</text>
-  <rect x="170" y="105" width="595" height="30" fill="#ef4444"/>
-  <text x="777" y="127" class="value">2.1251</text>
+  
+  <rect width="1100" height="460" fill="#fbfbfc"></rect>
 
-  <text x="48" y="194" class="label">RePlAce baseline</text>
-  <rect x="170" y="170" width="408" height="30" fill="#64748b"/>
-  <text x="590" y="192" class="value">1.4578</text>
+  
+  <text x="56" y="58" font-size="22" font-weight="700" fill="#0f172a" letter-spacing="-0.2">Average proxy cost</text>
+  <text x="56" y="82" font-size="14" fill="#475569">17 IBM ICCAD04 benchmarks</text>
 
-  <text x="48" y="259" class="label">Soft-Overlap SA</text>
-  <rect x="170" y="235" width="412" height="30" fill="#2563eb"/>
-  <text x="594" y="257" class="value">1.4713</text>
+  <line x1="56" y1="104" x2="1044" y2="104" stroke="#e5e7eb" stroke-width="1"></line>
 
-  <text x="170" y="316" class="note">The local run improves over SA and is about 0.9% worse than RePlAce.</text>
+  
+  <text x="320" y="138" font-size="11" font-weight="600" fill="#94a3b8" letter-spacing="1.2">PROXY COST</text>
+
+  
+  
+  
+
+  
+  <line x1="320" y1="160" x2="320" y2="380" stroke="#cbd5e1" stroke-width="1"></line>
+  <line x1="540" y1="160" x2="540" y2="380" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 3"></line>
+  <line x1="760" y1="160" x2="760" y2="380" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 3"></line>
+  <line x1="980" y1="160" x2="980" y2="380" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2 3"></line>
+
+  
+  <line x1="320" y1="380" x2="980" y2="380" stroke="#94a3b8" stroke-width="1"></line>
+
+  
+  <text x="320" y="402" font-size="12" fill="#64748b" text-anchor="middle">1.0</text>
+  <text x="540" y="402" font-size="12" fill="#64748b" text-anchor="middle">1.5</text>
+  <text x="760" y="402" font-size="12" fill="#64748b" text-anchor="middle">2.0</text>
+  <text x="980" y="402" font-size="12" fill="#64748b" text-anchor="middle">2.5</text>
+
+  
+  
+
+  
+  <text x="304" y="194" font-size="14" font-weight="600" fill="#0f172a" text-anchor="end">Soft-Overlap SA</text>
+  <text x="304" y="212" font-size="11" fill="#64748b" text-anchor="end">ours</text>
+  <rect x="320" y="178" width="207.4" height="36" fill="#2563eb"></rect>
+  <text x="537" y="201" font-size="13" font-weight="600" fill="#0f172a">1.4713</text>
+
+  
+  <text x="304" y="264" font-size="14" font-weight="500" fill="#0f172a" text-anchor="end">RePlAce</text>
+  <text x="304" y="282" font-size="11" fill="#64748b" text-anchor="end">analytical baseline</text>
+  <rect x="320" y="248" width="201.4" height="36" fill="#64748b"></rect>
+  <text x="531" y="271" font-size="13" font-weight="500" fill="#334155">1.4578</text>
+
+  
+  <text x="304" y="334" font-size="14" font-weight="500" fill="#0f172a" text-anchor="end">SA baseline</text>
+  <text x="304" y="352" font-size="11" fill="#64748b" text-anchor="end">non-incremental</text>
+  <rect x="320" y="318" width="495.04" height="36" fill="#cbd5e1"></rect>
+  <text x="825" y="341" font-size="13" font-weight="500" fill="#334155">2.1251</text>
+
+  
+  <text x="1044" y="429" font-size="11" fill="#94a3b8" text-anchor="end">Soft-Overlap SA from a local <tspan font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#475569">evaluate --all</tspan> run · ~0.9% behind RePlAce, ~31% ahead of SA baseline</text>
 </svg>
